@@ -82,10 +82,10 @@ const GameOver = ({ score, player, onRestart, onBackToStart }: GameOverProps) =>
             transition={{ delay: 0.3, type: "spring" }}
             className="mb-3 flex justify-center"
           >
-            <img 
+          <img 
               src={visualNeu} 
               alt="Shop, Score & Win!" 
-              className="w-2/3 h-auto object-contain drop-shadow-lg"
+              className="w-4/5 h-auto object-contain drop-shadow-lg"
               style={{ filter: 'drop-shadow(0 4px 6px rgba(0, 0, 0, 0.3))' }}
             />
           </motion.div>
