@@ -20,8 +20,8 @@ const StartScreen = ({ onStart, player, isRegistering = false }: StartScreenProp
         style={{ backgroundImage: `url(${bgHome})` }}
       />
       
-      {/* Logo top-left */}
-      <div className="fixed left-6 top-6 z-20">
+      {/* Logo top-left - 100px from left, at top edge */}
+      <div className="fixed top-0 z-20" style={{ left: '100px' }}>
         <img 
           src={logo} 
           alt="ORLEN Star" 
@@ -67,12 +67,12 @@ const StartScreen = ({ onStart, player, isRegistering = false }: StartScreenProp
           transition={{ duration: 0.5 }}
           className="flex flex-col items-center"
         >
-          {/* Desktop Visual - 15% larger */}
+          {/* Desktop Visual - 30% larger (15% + 15%) */}
           <img
             src={desktopVisual}
             alt="Your Basket to Happiness"
             className="max-w-full md:max-w-3xl"
-            style={{ transform: 'scale(1.15)' }}
+            style={{ transform: 'scale(1.30)' }}
           />
           
           {/* Play Button - only when not registering */}

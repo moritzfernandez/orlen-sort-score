@@ -59,8 +59,8 @@ const GameOver = ({ score, player, onRestart, onBackToStart }: GameOverProps) =>
         backgroundPosition: "center",
       }}
     >
-      {/* Logo top-left */}
-      <div className="absolute left-6 top-6 z-20">
+      {/* Logo top-left - 100px from left, at top edge */}
+      <div className="absolute top-0 z-20" style={{ left: '100px' }}>
         <img 
           src={logo} 
           alt="ORLEN Star" 
