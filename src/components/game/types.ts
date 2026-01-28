@@ -35,6 +35,15 @@ export const ORLEN_PRODUCTS: Product[] = [
   { id: 'chips-paprika', name: 'Kessel Chips Paprika', image: '/src/assets/products/chips-paprika.png', isOrlen: true, points: 10 },
 ];
 
+// Bonus Logo (rare!) - +20 points
+export const BONUS_LOGO: Product = { 
+  id: 'orlen-star-logo', 
+  name: 'ORLEN Star Logo', 
+  image: '/src/assets/products/orlen-star-logo.png', 
+  isOrlen: true, 
+  points: 20 
+};
+
 // Non-ORLEN products (avoid these!) - -5 points
 export const WRONG_PRODUCTS: Product[] = [
   { id: 'cola', name: 'Coca Cola', image: '/src/assets/products/cola.png', isOrlen: false, points: -5 },
