@@ -28,7 +28,7 @@ const StartScreen = ({ onStart, player, isRegistering = false }: StartScreenProp
         >
           <span className="text-2xl">⭐</span>
           <div className="text-primary-foreground">
-            <p className="text-xs font-medium opacity-80">Gesamtpunkte</p>
+            <p className="text-xs font-medium opacity-80">Total Points</p>
             <p className="font-display text-xl font-bold">{player.totalScore}</p>
           </div>
         </motion.div>
@@ -42,11 +42,12 @@ const StartScreen = ({ onStart, player, isRegistering = false }: StartScreenProp
           transition={{ duration: 0.5 }}
           className="flex flex-col items-center"
         >
-          {/* Desktop Visual */}
+          {/* Desktop Visual - 15% larger */}
           <img
             src={desktopVisual}
-            alt="Dein Korb zum Glück"
-            className="max-w-full md:max-w-2xl"
+            alt="Your Basket to Happiness"
+            className="max-w-full md:max-w-3xl"
+            style={{ transform: 'scale(1.15)' }}
           />
           
           {/* Play Button - only when not registering */}
@@ -62,7 +63,7 @@ const StartScreen = ({ onStart, player, isRegistering = false }: StartScreenProp
                 size="lg"
                 className="h-16 px-12 text-2xl font-bold uppercase tracking-wide shadow-2xl"
               >
-                Jetzt Spielen! 🎮
+                Play Now! 🎮
               </Button>
             </motion.div>
           )}
