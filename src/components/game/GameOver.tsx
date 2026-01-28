@@ -1,4 +1,6 @@
+import { useState, useMemo } from "react";
 import { motion } from "framer-motion";
+import { Copy, Check } from "lucide-react";
 import type { PlayerInfo } from "./types";
 import bgGame from "@/assets/bg-game.png";
 import logo from "@/assets/logo.png";
@@ -13,15 +15,38 @@ interface GameOverProps {
 }
 
 const GameOver = ({ score, player, onRestart, onBackToStart }: GameOverProps) => {
+  const [copied, setCopied] = useState(false);
+  
   const getMessage = () => {
-    if (score >= 200) return { emoji: "🏆", text: "Fantastic!" };
-    if (score >= 100) return { emoji: "🌟", text: "Great job!" };
-    if (score >= 50) return { emoji: "👍", text: "Well played!" };
-    return { emoji: "💪", text: "Try again!" };
+    if (score >= 200) return { text: "Fantastic!" };
+    if (score >= 100) return { text: "Great job!" };
+    if (score >= 50) return { text: "Well played!" };
+    return { text: "Try again!" };
   };
 
-  const { emoji, text } = getMessage();
+  // Generate a unique 6-digit discount code
+  const discountCode = useMemo(() => {
+    const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+    let code = '';
+    for (let i = 0; i < 6; i++) {
+      code += chars.charAt(Math.floor(Math.random() * chars.length));
+    }
+    return code;
+  }, []);
+
+  const handleCopyCode = async () => {
+    try {
+      await navigator.clipboard.writeText(discountCode);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    } catch (err) {
+      console.error('Failed to copy:', err);
+    }
+  };
+
+  const { text } = getMessage();
   const progressPercent = Math.min((score / 200) * 100, 100);
+  const hasWon = score >= 200;
 
   return (
     <motion.div
@@ -50,23 +75,65 @@ const GameOver = ({ score, player, onRestart, onBackToStart }: GameOverProps) =>
       >
         {/* Header */}
         <div className="bg-primary p-6 text-center">
-          {/* Visual replacing emoji */}
+          {/* Visual with shadow - larger */}
           <motion.div
             initial={{ scale: 0 }}
             animate={{ scale: 1 }}
             transition={{ delay: 0.3, type: "spring" }}
-            className="mb-2 flex justify-center"
+            className="mb-3 flex justify-center"
           >
             <img 
               src={visualNeu} 
               alt="Shop, Score & Win!" 
-              className="w-1/2 h-auto object-contain"
+              className="w-2/3 h-auto object-contain drop-shadow-lg"
+              style={{ filter: 'drop-shadow(0 4px 6px rgba(0, 0, 0, 0.3))' }}
             />
           </motion.div>
           <h1 className="text-4xl font-bold text-primary-foreground">
-            Game Over!
+            {hasWon ? "You Won!" : "Game Over!"}
           </h1>
-          <p className="mt-2 text-xl text-primary-foreground/90">{text}</p>
+          
+          {/* Discount Code - only shown if won */}
+          {hasWon && (
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.5 }}
+              className="mt-4"
+            >
+              <p className="text-sm text-primary-foreground/80 mb-2">
+                Copy and use for discount!
+              </p>
+              <motion.button
+                onClick={handleCopyCode}
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+                className="inline-flex items-center gap-2 bg-white/20 backdrop-blur-sm px-6 py-3 rounded-lg border-2 border-white/40 hover:bg-white/30 transition-colors"
+              >
+                <span className="font-display text-3xl font-bold tracking-widest text-primary-foreground">
+                  {discountCode}
+                </span>
+                {copied ? (
+                  <Check className="w-6 h-6 text-primary-foreground" />
+                ) : (
+                  <Copy className="w-6 h-6 text-primary-foreground" />
+                )}
+              </motion.button>
+              {copied && (
+                <motion.p
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  className="mt-2 text-sm text-primary-foreground"
+                >
+                  ✓ Copied!
+                </motion.p>
+              )}
+            </motion.div>
+          )}
+          
+          {!hasWon && (
+            <p className="mt-2 text-xl text-primary-foreground/90">{text}</p>
+          )}
         </div>
 
         {/* Score */}
