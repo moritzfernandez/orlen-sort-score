@@ -11,10 +11,10 @@ interface StartScreenProps {
 
 const StartScreen = ({ onStart, player, isRegistering = false }: StartScreenProps) => {
   return (
-    <section className="relative min-h-screen w-full overflow-hidden">
+    <section className="relative min-h-screen w-full">
       {/* Fixed Background Image */}
       <div 
-        className="fixed inset-0 bg-cover bg-center bg-no-repeat"
+        className="pointer-events-none fixed inset-0 -z-10 bg-cover bg-center bg-no-repeat"
         style={{ backgroundImage: `url(${startBg})` }}
       />
       

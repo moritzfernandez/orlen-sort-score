@@ -73,7 +73,7 @@ const Index = () => {
       {phase === "register" && (
         <>
           <StartScreen onStart={handleStartClick} player={player} isRegistering={true} />
-          <div ref={registerRef}>
+          <div ref={registerRef} className="relative z-20">
             <RegistrationForm onSubmit={handleRegistration} />
           </div>
         </>
