@@ -6,6 +6,7 @@ import cafeImg from "@/assets/products/cafe.png";
 import colaImg from "@/assets/products/cola.png";
 import mezzomixImg from "@/assets/products/mezzomix.png";
 import colazeroImg from "@/assets/products/colazero.png";
+import basketImg from "@/assets/basket.png";
 import type { FallingProduct, PlayerInfo } from "./types";
 import { ORLEN_PRODUCTS, WRONG_PRODUCTS } from "./types";
 
@@ -14,10 +15,10 @@ interface GameCanvasProps {
   onGameOver: (score: number) => void;
 }
 
-const CART_WIDTH = 120;
-const PRODUCT_SIZE = 72; // 20% larger than 60
+const CART_WIDTH = 140;
+const PRODUCT_SIZE = 94; // 30% larger than original 72px
 const GAME_DURATION = 60000; // 1 minute
-const INITIAL_SPAWN_RATE = 1200;
+const INITIAL_SPAWN_RATE = 800; // faster spawning
 
 // Image mapping
 const productImages: Record<string, string> = {
@@ -135,7 +136,7 @@ const GameCanvas = ({ player, onGameOver }: GameCanvasProps) => {
               }
               return newLives;
             });
-            setShowFeedback({ text: "Verpasst! ❌", isPositive: false, x: 50 });
+            setShowFeedback({ text: "Missed! ❌", isPositive: false, x: 50 });
             setTimeout(() => setShowFeedback(null), 800);
           });
         }
@@ -268,8 +269,8 @@ const GameCanvas = ({ player, onGameOver }: GameCanvasProps) => {
           animate={{ scale: [1, 1.1, 1] }}
           className="rounded-full bg-black/60 px-6 py-2 backdrop-blur-sm"
         >
-          <span className="font-display text-2xl font-bold text-score-gold">
-            {score} Punkte
+        <span className="font-display text-2xl font-bold text-score-gold">
+            {score} Points
           </span>
         </motion.div>
       </div>
@@ -329,30 +330,26 @@ const GameCanvas = ({ player, onGameOver }: GameCanvasProps) => {
         )}
       </AnimatePresence>
 
-      {/* Shopping Cart */}
+      {/* Shopping Basket */}
       <motion.div
         animate={{ x: '-50%' }}
         style={{ left: `${cartX}%` }}
         className="absolute bottom-4 z-10 flex flex-col items-center"
       >
-        <div className="relative">
-          {/* Cart body */}
-          <div className="flex h-20 w-28 items-end justify-center rounded-b-2xl rounded-t-lg bg-gradient-to-b from-primary to-primary/80 shadow-2xl">
-            <div className="mb-2 text-4xl">🛒</div>
-          </div>
-          {/* Cart wheels */}
-          <div className="absolute -bottom-2 left-2 h-4 w-4 rounded-full bg-gray-800" />
-          <div className="absolute -bottom-2 right-2 h-4 w-4 rounded-full bg-gray-800" />
-        </div>
+        <img 
+          src={basketImg} 
+          alt="Shopping Basket" 
+          className="h-24 w-auto drop-shadow-2xl"
+        />
         <p className="mt-1 rounded bg-black/50 px-2 py-0.5 text-xs text-white">
-          ← → oder Maus
+          ← → or Mouse
         </p>
       </motion.div>
 
       {/* Instructions overlay at start */}
       <div className="pointer-events-none absolute bottom-32 left-0 right-0 text-center">
         <p className="text-shadow-game text-lg font-semibold text-white">
-          Fange nur ORLEN & Star Produkte! 🌟
+          Catch only ORLEN & Star products! 🌟
         </p>
       </div>
     </div>

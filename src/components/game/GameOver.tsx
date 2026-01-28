@@ -10,10 +10,10 @@ interface GameOverProps {
 
 const GameOver = ({ score, player, onRestart, onBackToStart }: GameOverProps) => {
   const getMessage = () => {
-    if (score >= 200) return { emoji: "🏆", text: "Fantastisch!" };
-    if (score >= 100) return { emoji: "🌟", text: "Super gemacht!" };
-    if (score >= 50) return { emoji: "👍", text: "Gut gespielt!" };
-    return { emoji: "💪", text: "Versuch's nochmal!" };
+    if (score >= 200) return { emoji: "🏆", text: "Fantastic!" };
+    if (score >= 100) return { emoji: "🌟", text: "Great job!" };
+    if (score >= 50) return { emoji: "👍", text: "Well played!" };
+    return { emoji: "💪", text: "Try again!" };
   };
 
   const { emoji, text } = getMessage();
@@ -40,15 +40,15 @@ const GameOver = ({ score, player, onRestart, onBackToStart }: GameOverProps) =>
           >
             {emoji}
           </motion.div>
-          <h1 className="game-title text-4xl text-primary-foreground">
-            Spiel vorbei!
+          <h1 className="text-4xl font-bold text-primary-foreground">
+            Game Over!
           </h1>
           <p className="mt-2 text-xl text-primary-foreground/90">{text}</p>
         </div>
 
         {/* Score */}
         <div className="p-6 text-center">
-          <p className="text-muted-foreground">Spieler: {player.name}</p>
+          <p className="text-muted-foreground">Player: {player.name}</p>
           
           <motion.div
             initial={{ scale: 0 }}
@@ -56,7 +56,7 @@ const GameOver = ({ score, player, onRestart, onBackToStart }: GameOverProps) =>
             transition={{ delay: 0.5, type: "spring" }}
             className="my-6"
           >
-            <p className="text-lg text-muted-foreground">Deine Punkte</p>
+            <p className="text-lg text-muted-foreground">Your Score</p>
             <p className="font-display text-6xl font-bold text-primary">
               {score}
             </p>
@@ -64,7 +64,7 @@ const GameOver = ({ score, player, onRestart, onBackToStart }: GameOverProps) =>
 
           <div className="mb-6 rounded-lg bg-muted p-4">
             <p className="text-sm text-muted-foreground">
-              💡 Tipp: Diese Punkte kannst du an der Tankstelle einlösen!
+              💡 Tip: Redeem these points at the gas station!
             </p>
           </div>
 
@@ -76,7 +76,7 @@ const GameOver = ({ score, player, onRestart, onBackToStart }: GameOverProps) =>
               onClick={onRestart}
               className="w-full rounded-lg bg-primary py-4 font-display text-xl font-bold uppercase tracking-wide text-primary-foreground shadow-lg"
             >
-              Nochmal spielen 🎮
+              Play Again 🎮
             </motion.button>
             
             <motion.button
@@ -85,7 +85,7 @@ const GameOver = ({ score, player, onRestart, onBackToStart }: GameOverProps) =>
               onClick={onBackToStart}
               className="w-full rounded-lg border-2 border-primary bg-transparent py-3 font-display text-lg font-bold uppercase tracking-wide text-primary"
             >
-              Zum Startbildschirm
+              Back to Start
             </motion.button>
           </div>
         </div>
@@ -93,7 +93,7 @@ const GameOver = ({ score, player, onRestart, onBackToStart }: GameOverProps) =>
         {/* Footer */}
         <div className="border-t border-border bg-muted/50 p-4 text-center">
           <p className="text-sm text-muted-foreground">
-            🛢️ ORLEN & Star - Dein Korb zum Glück!
+            🛢️ ORLEN & Star - Your Basket to Happiness!
           </p>
         </div>
       </motion.div>
