@@ -91,7 +91,7 @@ const GameOver = ({ score, player, onRestart, onBackToStart }: GameOverProps) =>
                   className="absolute top-1/2 -translate-y-1/2 -translate-x-1/2 w-12 h-12 z-10"
                 >
                   <img src={progressIcon} alt="Progress" className="w-full h-full object-contain" />
-                  <span className="absolute inset-0 flex items-center justify-center font-display font-bold text-primary text-xs">
+                  <span className="absolute inset-0 flex items-center justify-center font-display font-bold text-white text-xs">
                     {score}
                   </span>
                 </motion.div>
