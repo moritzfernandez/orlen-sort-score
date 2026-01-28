@@ -8,17 +8,18 @@ import mezzomixImg from "@/assets/products/mezzomix.png";
 import colazeroImg from "@/assets/products/colazero.png";
 import chipsMeersalzImg from "@/assets/products/chips-meersalz.png";
 import chipsPaprikaImg from "@/assets/products/chips-paprika.png";
+import orlenStarLogoImg from "@/assets/products/orlen-star-logo.png";
 import basketImg from "@/assets/basket.png";
 import type { FallingProduct, PlayerInfo } from "./types";
-import { ORLEN_PRODUCTS, WRONG_PRODUCTS } from "./types";
+import { ORLEN_PRODUCTS, WRONG_PRODUCTS, BONUS_LOGO } from "./types";
 
 interface GameCanvasProps {
   player: PlayerInfo;
   onGameOver: (score: number) => void;
 }
 
-const CART_WIDTH = 280; // doubled
-const PRODUCT_SIZE = 188; // doubled from 94px
+const CART_WIDTH = 280;
+const PRODUCT_SIZE = 170; // 10% smaller than 188
 const GAME_DURATION = 60000; // 1 minute
 const INITIAL_SPAWN_RATE = 800; // faster spawning
 
@@ -31,6 +32,7 @@ const productImages: Record<string, string> = {
   'colazero': colazeroImg,
   'chips-meersalz': chipsMeersalzImg,
   'chips-paprika': chipsPaprikaImg,
+  'orlen-star-logo': orlenStarLogoImg,
 };
 
 const GameCanvas = ({ player, onGameOver }: GameCanvasProps) => {
@@ -87,17 +89,26 @@ const GameCanvas = ({ player, onGameOver }: GameCanvasProps) => {
       const elapsed = Date.now() - gameStartTimeRef.current;
       if (elapsed >= GAME_DURATION) return;
 
-      // 60% chance ORLEN, 40% chance wrong product
-      const isOrlen = Math.random() < 0.6;
-      const productPool = isOrlen ? ORLEN_PRODUCTS : WRONG_PRODUCTS;
-      const randomProduct = productPool[Math.floor(Math.random() * productPool.length)];
+      // 10% chance for bonus logo, 54% ORLEN products, 36% wrong products
+      const rand = Math.random();
+      let randomProduct;
+      
+      if (rand < 0.1) {
+        // Rare bonus logo
+        randomProduct = BONUS_LOGO;
+      } else if (rand < 0.64) {
+        // ORLEN products (54%)
+        randomProduct = ORLEN_PRODUCTS[Math.floor(Math.random() * ORLEN_PRODUCTS.length)];
+      } else {
+        // Wrong products (36%)
+        randomProduct = WRONG_PRODUCTS[Math.floor(Math.random() * WRONG_PRODUCTS.length)];
+      }
 
       const newProduct: FallingProduct = {
         ...randomProduct,
         id: `${randomProduct.id}-${Date.now()}-${Math.random()}`,
         x: Math.random() * 80 + 10, // 10-90% of screen width
-        y: -10,
-        // constant difficulty (no 10s speed steps)
+        y: 0, // Start from very top
         speed: 2.6 + Math.random() * 1.6,
         rotation: Math.random() * 360,
       };
