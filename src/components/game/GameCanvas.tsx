@@ -265,8 +265,13 @@ const GameCanvas = ({ player, onGameOver }: GameCanvasProps) => {
           </span>
         </div>
         
-        {/* Score and Lives - right side */}
+        {/* Name, Score and Lives - right side */}
         <div className="flex flex-col items-end">
+          {/* Player name */}
+          <div className="bg-primary px-6 py-1">
+            <span className="text-sm font-semibold text-primary-foreground">{player.name}</span>
+          </div>
+          
           {/* Score in red box */}
           <motion.div 
             key={score}
@@ -291,11 +296,6 @@ const GameCanvas = ({ player, onGameOver }: GameCanvasProps) => {
             ))}
           </div>
         </div>
-      </div>
-
-      {/* Player name */}
-      <div className="absolute left-4 top-16 z-20 bg-primary/90 px-3 py-1">
-        <span className="font-semibold text-primary-foreground">{player.name}</span>
       </div>
 
       {/* Falling products */}
