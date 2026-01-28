@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import { Progress } from "@/components/ui/progress";
 import type { PlayerInfo } from "./types";
 
 interface GameOverProps {
@@ -61,6 +62,19 @@ const GameOver = ({ score, player, onRestart, onBackToStart }: GameOverProps) =>
               {score}
             </p>
           </motion.div>
+
+          {/* Progress to 200 points */}
+          <div className="mb-6 space-y-2">
+            <Progress 
+              value={Math.min((score / 200) * 100, 100)} 
+              className="h-3"
+            />
+            <p className="text-sm text-muted-foreground">
+              {score >= 200 
+                ? "🎉 Reward unlocked!" 
+                : `${200 - score} points missing to get the next reward`}
+            </p>
+          </div>
 
           <div className="mb-6 bg-muted p-4">
             <p className="text-sm text-muted-foreground">
