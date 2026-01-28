@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import { Button } from "@/components/ui/button";
 import startBg from "@/assets/start-bg.png";
 import desktopVisual from "@/assets/desktop-visual.png";
 import type { PlayerInfo } from "./types";
@@ -41,15 +42,30 @@ const StartScreen = ({ onStart, player, isRegistering = false }: StartScreenProp
           transition={{ duration: 0.5 }}
           className="flex flex-col items-center"
         >
-          {/* Desktop Visual - clickable only when not registering */}
-          <motion.img
+          {/* Desktop Visual */}
+          <img
             src={desktopVisual}
             alt="Dein Korb zum Glück"
-            className={`max-w-full md:max-w-2xl ${!isRegistering ? 'cursor-pointer' : ''}`}
-            whileHover={!isRegistering ? { scale: 1.02 } : {}}
-            whileTap={!isRegistering ? { scale: 0.98 } : {}}
-            onClick={!isRegistering ? onStart : undefined}
+            className="max-w-full md:max-w-2xl"
           />
+          
+          {/* Play Button - only when not registering */}
+          {!isRegistering && (
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.3, duration: 0.5 }}
+              className="mt-6"
+            >
+              <Button
+                onClick={onStart}
+                size="lg"
+                className="h-16 px-12 text-2xl font-bold uppercase tracking-wide shadow-2xl"
+              >
+                Jetzt Spielen! 🎮
+              </Button>
+            </motion.div>
+          )}
         </motion.div>
       </div>
     </section>
