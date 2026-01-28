@@ -2,6 +2,7 @@ import { motion } from "framer-motion";
 import type { PlayerInfo } from "./types";
 import gameBackground from "@/assets/game-background.png";
 import progressIcon from "@/assets/progress-icon.png";
+import visualNeu from "@/assets/visual-neu.png";
 
 interface GameOverProps {
   score: number;
@@ -39,14 +40,19 @@ const GameOver = ({ score, player, onRestart, onBackToStart }: GameOverProps) =>
         className="w-full max-w-md overflow-hidden bg-card/95 backdrop-blur-sm shadow-2xl rounded-lg"
       >
         {/* Header */}
-        <div className="bg-primary p-8 text-center">
+        <div className="bg-primary p-6 text-center">
+          {/* Visual replacing emoji */}
           <motion.div
             initial={{ scale: 0 }}
             animate={{ scale: 1 }}
             transition={{ delay: 0.3, type: "spring" }}
-            className="mb-4 text-7xl"
+            className="mb-2 flex justify-center"
           >
-            {emoji}
+            <img 
+              src={visualNeu} 
+              alt="Shop, Score & Win!" 
+              className="w-1/2 h-auto object-contain"
+            />
           </motion.div>
           <h1 className="text-4xl font-bold text-primary-foreground">
             Game Over!

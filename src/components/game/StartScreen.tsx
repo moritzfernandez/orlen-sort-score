@@ -15,8 +15,8 @@ const StartScreen = ({ onStart, player, isRegistering = false }: StartScreenProp
     <section className="relative min-h-screen w-full">
       {/* Fixed Background Image */}
       <div 
-        className="pointer-events-none fixed inset-0 z-0 bg-cover bg-center bg-no-repeat"
-        style={{ backgroundImage: `url(${startBg})` }}
+        className="pointer-events-none fixed inset-0 z-0 bg-contain bg-center bg-no-repeat"
+        style={{ backgroundImage: `url(${startBg})`, backgroundColor: '#fff' }}
       />
       
       {/* Score Badge - shown if player exists */}
