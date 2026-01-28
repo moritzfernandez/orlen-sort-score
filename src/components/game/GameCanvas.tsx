@@ -17,9 +17,7 @@ interface GameCanvasProps {
 const CART_WIDTH = 120;
 const PRODUCT_SIZE = 72; // 20% larger than 60
 const GAME_DURATION = 60000; // 1 minute
-const SPEED_INCREASE_INTERVAL = 10000; // 10 seconds
 const INITIAL_SPAWN_RATE = 1200;
-const MIN_SPAWN_RATE = 400;
 
 // Image mapping
 const productImages: Record<string, string> = {
@@ -38,9 +36,9 @@ const GameCanvas = ({ player, onGameOver }: GameCanvasProps) => {
   const [showFeedback, setShowFeedback] = useState<{ text: string; isPositive: boolean; x: number } | null>(null);
   const [missedProducts, setMissedProducts] = useState<string[]>([]);
   const [timeLeft, setTimeLeft] = useState(GAME_DURATION);
+  const livesRef = useRef(lives);
   
   const gameAreaRef = useRef<HTMLDivElement>(null);
-  const spawnRateRef = useRef(INITIAL_SPAWN_RATE);
   const gameStartTimeRef = useRef(Date.now());
   const scoreRef = useRef(0);
 
@@ -48,6 +46,10 @@ const GameCanvas = ({ player, onGameOver }: GameCanvasProps) => {
   useEffect(() => {
     scoreRef.current = score;
   }, [score]);
+
+  useEffect(() => {
+    livesRef.current = lives;
+  }, [lives]);
 
   // Game timer - 1 minute
   useEffect(() => {
@@ -68,16 +70,17 @@ const GameCanvas = ({ player, onGameOver }: GameCanvasProps) => {
 
   // Spawn new products
   useEffect(() => {
-    if (lives <= 0 || timeLeft <= 0) return;
+    if (lives <= 0) return;
 
-    let timeoutId: NodeJS.Timeout;
+    let timeoutId: number | undefined;
+    let cancelled = false;
 
     const spawnProduct = () => {
-      // Increase difficulty every 10 seconds
+      if (cancelled) return;
+      if (livesRef.current <= 0) return;
+
       const elapsed = Date.now() - gameStartTimeRef.current;
-      const speedLevel = Math.floor(elapsed / SPEED_INCREASE_INTERVAL);
-      const speedMultiplier = 1 + speedLevel * 0.3;
-      const currentSpawnRate = Math.max(MIN_SPAWN_RATE, INITIAL_SPAWN_RATE - speedLevel * 100);
+      if (elapsed >= GAME_DURATION) return;
 
       // 60% chance ORLEN, 40% chance wrong product
       const isOrlen = Math.random() < 0.6;
@@ -89,21 +92,24 @@ const GameCanvas = ({ player, onGameOver }: GameCanvasProps) => {
         id: `${randomProduct.id}-${Date.now()}-${Math.random()}`,
         x: Math.random() * 80 + 10, // 10-90% of screen width
         y: -10,
-        speed: (2 + Math.random() * 1.5) * speedMultiplier,
+        // constant difficulty (no 10s speed steps)
+        speed: 2.6 + Math.random() * 1.6,
         rotation: Math.random() * 360,
       };
 
       setProducts(prev => [...prev, newProduct]);
       
-      // Schedule next spawn with updated rate
-      timeoutId = setTimeout(spawnProduct, currentSpawnRate);
+      timeoutId = window.setTimeout(spawnProduct, INITIAL_SPAWN_RATE);
     };
 
     // Start spawning
-    timeoutId = setTimeout(spawnProduct, 500);
+    timeoutId = window.setTimeout(spawnProduct, 500);
     
-    return () => clearTimeout(timeoutId);
-  }, [lives, timeLeft]);
+    return () => {
+      cancelled = true;
+      if (timeoutId) window.clearTimeout(timeoutId);
+    };
+  }, [lives]);
 
   // Game loop - move products
   useEffect(() => {
