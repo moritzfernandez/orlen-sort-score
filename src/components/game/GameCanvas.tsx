@@ -9,6 +9,9 @@ import colazeroImg from "@/assets/products/colazero.png";
 import chipsMeersalzImg from "@/assets/products/chips-meersalz.png";
 import chipsPaprikaImg from "@/assets/products/chips-paprika.png";
 import orlenStarLogoImg from "@/assets/products/orlen-star-logo.png";
+import benzinImg from "@/assets/products/benzin.png";
+import energyDrinkImg from "@/assets/products/energy-drink.png";
+import tankenImg from "@/assets/products/tanken.png";
 import basketImg from "@/assets/basket.png";
 // Wrong products images
 import wrongBaumImg from "@/assets/products/wrong-baum.png";
@@ -41,6 +44,9 @@ const productImages: Record<string, string> = {
   'chips-meersalz': chipsMeersalzImg,
   'chips-paprika': chipsPaprikaImg,
   'orlen-star-logo': orlenStarLogoImg,
+  'benzin': benzinImg,
+  'energy-drink': energyDrinkImg,
+  'tanken': tankenImg,
   // Wrong products
   'wrong-baum': wrongBaumImg,
   'wrong-cat': wrongCatImg,
