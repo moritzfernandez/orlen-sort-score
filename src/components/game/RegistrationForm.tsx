@@ -58,7 +58,7 @@ const RegistrationForm = ({
         onSubmit({
           name: name.trim(),
           email: email.trim(),
-          totalScore: 0
+          highScore: 0
         });
       }
     }
