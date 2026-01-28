@@ -36,6 +36,9 @@ export const ORLEN_PRODUCTS: Product[] = [
   { id: 'cola', name: 'Coca Cola', image: '/src/assets/products/cola.png', isOrlen: true, points: 10 },
   { id: 'mezzomix', name: 'Mezzo Mix', image: '/src/assets/products/mezzomix.png', isOrlen: true, points: 10 },
   { id: 'colazero', name: 'Cola Zero', image: '/src/assets/products/colazero.png', isOrlen: true, points: 10 },
+  { id: 'benzin', name: 'Benzinkanister', image: '/src/assets/products/benzin.png', isOrlen: true, points: 10 },
+  { id: 'energy-drink', name: 'Star Energy Drink', image: '/src/assets/products/energy-drink.png', isOrlen: true, points: 10 },
+  { id: 'tanken', name: 'Tankpistole', image: '/src/assets/products/tanken.png', isOrlen: true, points: 10 },
 ];
 
 // Bonus Logo (rare!) - +20 points
