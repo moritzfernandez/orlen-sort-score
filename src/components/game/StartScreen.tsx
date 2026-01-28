@@ -67,11 +67,11 @@ const StartScreen = ({ onStart, player, isRegistering = false }: StartScreenProp
           transition={{ duration: 0.5 }}
           className="flex flex-col items-center"
         >
-          {/* Desktop Visual - 30% larger (15% + 15%) */}
+          {/* Desktop Visual - 30% larger - pointer-events disabled to not block button */}
           <img
             src={desktopVisual}
             alt="Your Basket to Happiness"
-            className="max-w-full md:max-w-3xl"
+            className="max-w-full md:max-w-3xl pointer-events-none"
             style={{ transform: 'scale(1.30)' }}
           />
           
@@ -81,12 +81,12 @@ const StartScreen = ({ onStart, player, isRegistering = false }: StartScreenProp
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.3, duration: 0.5 }}
-              className="mt-6"
+              className="mt-6 relative z-50"
             >
               <Button
                 onClick={onStart}
                 size="lg"
-                className="h-16 px-12 text-2xl font-bold uppercase tracking-wide shadow-2xl"
+                className="h-16 px-12 text-2xl font-bold uppercase tracking-wide shadow-2xl cursor-pointer"
               >
                 Let's Go!
               </Button>
