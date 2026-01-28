@@ -64,7 +64,7 @@ const GameOver = ({ score, player, onRestart, onBackToStart }: GameOverProps) =>
 
           <div className="mb-6 bg-muted p-4">
             <p className="text-sm text-muted-foreground">
-              💡 Tip: Redeem these points at the gas station!
+              🏆 High Score: <span className="font-bold">{player.highScore || 0}</span>
             </p>
           </div>
 

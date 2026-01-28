@@ -16,7 +16,7 @@ export interface FallingProduct extends Product {
 export interface PlayerInfo {
   name: string;
   email: string;
-  totalScore: number;
+  highScore: number;
 }
 
 export interface GameState {
@@ -84,12 +84,14 @@ export const loadPlayer = (): PlayerInfo | null => {
   return null;
 };
 
-// Update player total score
-export const updatePlayerScore = (additionalScore: number): PlayerInfo | null => {
+// Update player high score (only if new score is higher)
+export const updatePlayerScore = (newScore: number): PlayerInfo | null => {
   const player = loadPlayer();
   if (player) {
-    player.totalScore = (player.totalScore || 0) + additionalScore;
-    savePlayer(player);
+    if (newScore > (player.highScore || 0)) {
+      player.highScore = newScore;
+      savePlayer(player);
+    }
     return player;
   }
   return null;

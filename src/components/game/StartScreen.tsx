@@ -28,13 +28,13 @@ const StartScreen = ({ onStart, player, isRegistering = false }: StartScreenProp
           className="fixed right-0 top-4 z-30 flex flex-col bg-primary px-6 py-3 shadow-lg"
         >
           <p className="text-sm font-semibold text-primary-foreground">{player.name}</p>
-          <p className="font-display text-2xl font-bold text-primary-foreground">{player.totalScore} Points</p>
+          <p className="font-display text-2xl font-bold text-primary-foreground">🏆 {player.highScore || 0}</p>
           <button
             onClick={() => {
               if (navigator.share) {
                 navigator.share({
                   title: 'ORLEN Star Game',
-                  text: `I scored ${player.totalScore} points in the ORLEN Star Game! Can you beat me?`,
+                  text: `My high score is ${player.highScore || 0} points in the ORLEN Star Game! Can you beat me?`,
                   url: window.location.href,
                 });
               } else {
