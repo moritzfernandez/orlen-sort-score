@@ -78,7 +78,7 @@ const StartScreen = ({ onStart, player, isRegistering = false }: StartScreenProp
                 size="lg"
                 className="h-16 px-12 text-2xl font-bold uppercase tracking-wide shadow-2xl"
               >
-                Play Now!
+                Let's Go!
               </Button>
             </motion.div>
           )}
