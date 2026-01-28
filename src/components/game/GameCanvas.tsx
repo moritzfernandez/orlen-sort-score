@@ -6,6 +6,8 @@ import cafeImg from "@/assets/products/cafe.png";
 import colaImg from "@/assets/products/cola.png";
 import mezzomixImg from "@/assets/products/mezzomix.png";
 import colazeroImg from "@/assets/products/colazero.png";
+import chipsMeersalzImg from "@/assets/products/chips-meersalz.png";
+import chipsPaprikaImg from "@/assets/products/chips-paprika.png";
 import basketImg from "@/assets/basket.png";
 import type { FallingProduct, PlayerInfo } from "./types";
 import { ORLEN_PRODUCTS, WRONG_PRODUCTS } from "./types";
@@ -27,6 +29,8 @@ const productImages: Record<string, string> = {
   'cola': colaImg,
   'mezzomix': mezzomixImg,
   'colazero': colazeroImg,
+  'chips-meersalz': chipsMeersalzImg,
+  'chips-paprika': chipsPaprikaImg,
 };
 
 const GameCanvas = ({ player, onGameOver }: GameCanvasProps) => {
