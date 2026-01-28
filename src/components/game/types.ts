@@ -33,6 +33,9 @@ export const ORLEN_PRODUCTS: Product[] = [
   { id: 'cafe', name: 'Star Café', image: '/src/assets/products/cafe.png', isOrlen: true, points: 10 },
   { id: 'chips-meersalz', name: 'Kessel Chips Meersalz', image: '/src/assets/products/chips-meersalz.png', isOrlen: true, points: 10 },
   { id: 'chips-paprika', name: 'Kessel Chips Paprika', image: '/src/assets/products/chips-paprika.png', isOrlen: true, points: 10 },
+  { id: 'cola', name: 'Coca Cola', image: '/src/assets/products/cola.png', isOrlen: true, points: 10 },
+  { id: 'mezzomix', name: 'Mezzo Mix', image: '/src/assets/products/mezzomix.png', isOrlen: true, points: 10 },
+  { id: 'colazero', name: 'Cola Zero', image: '/src/assets/products/colazero.png', isOrlen: true, points: 10 },
 ];
 
 // Bonus Logo (rare!) - +20 points
@@ -44,11 +47,9 @@ export const BONUS_LOGO: Product = {
   points: 20 
 };
 
-// Non-ORLEN products (avoid these!) - -5 points
+// Wrong products (avoid these!) - -5 points (red X only)
 export const WRONG_PRODUCTS: Product[] = [
-  { id: 'cola', name: 'Coca Cola', image: '/src/assets/products/cola.png', isOrlen: false, points: -5 },
-  { id: 'mezzomix', name: 'Mezzo Mix', image: '/src/assets/products/mezzomix.png', isOrlen: false, points: -5 },
-  { id: 'colazero', name: 'Cola Zero', image: '/src/assets/products/colazero.png', isOrlen: false, points: -5 },
+  { id: 'wrong-item', name: 'Wrong Item', isOrlen: false, points: -5 },
 ];
 
 export const ALL_PRODUCTS = [...ORLEN_PRODUCTS, ...WRONG_PRODUCTS];

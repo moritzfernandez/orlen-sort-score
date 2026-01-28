@@ -328,8 +328,8 @@ const GameCanvas = ({ player, onGameOver }: GameCanvasProps) => {
                 );
               } else {
                 return (
-                  <div className={`flex h-16 w-16 items-center justify-center rounded-full ${product.isOrlen ? 'bg-primary' : 'bg-destructive'} shadow-lg`}>
-                    <span className="text-xl">{product.isOrlen ? '⭐' : '❌'}</span>
+                  <div className={`flex h-12 w-12 items-center justify-center rounded-full ${product.isOrlen ? 'bg-primary' : 'bg-destructive'} shadow-lg`}>
+                    <span className="text-lg">{product.isOrlen ? '⭐' : '❌'}</span>
                   </div>
                 );
               }
@@ -356,10 +356,14 @@ const GameCanvas = ({ player, onGameOver }: GameCanvasProps) => {
       </AnimatePresence>
 
       {/* Shopping Basket */}
-      <motion.div
-        animate={{ x: '-50%' }}
-        style={{ left: `${cartX}%` }}
-        className="absolute bottom-4 z-10 flex flex-col items-center"
+      <div
+        style={{ 
+          position: 'absolute',
+          left: `${cartX}%`,
+          transform: 'translateX(-50%)',
+          bottom: '16px'
+        }}
+        className="z-10 flex flex-col items-center"
       >
         <img 
           src={basketImg} 
@@ -369,7 +373,7 @@ const GameCanvas = ({ player, onGameOver }: GameCanvasProps) => {
         <p className="mt-1 rounded bg-black/50 px-2 py-0.5 text-xs text-white">
           ← → or Mouse
         </p>
-      </motion.div>
+      </div>
 
       {/* Instructions overlay at start */}
       <div className="pointer-events-none absolute bottom-32 left-0 right-0 text-center">
