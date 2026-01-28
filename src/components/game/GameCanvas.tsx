@@ -1,8 +1,13 @@
 import { useEffect, useRef, useState, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import gameBackground from "@/assets/game-background.png";
+import pizzaImg from "@/assets/products/pizza.png";
+import cafeImg from "@/assets/products/cafe.png";
+import colaImg from "@/assets/products/cola.png";
+import mezzomixImg from "@/assets/products/mezzomix.png";
+import colazeroImg from "@/assets/products/colazero.png";
 import type { FallingProduct, PlayerInfo } from "./types";
-import { ALL_PRODUCTS, ORLEN_PRODUCTS, WRONG_PRODUCTS } from "./types";
+import { ORLEN_PRODUCTS, WRONG_PRODUCTS } from "./types";
 
 interface GameCanvasProps {
   player: PlayerInfo;
@@ -10,34 +15,67 @@ interface GameCanvasProps {
 }
 
 const CART_WIDTH = 120;
-const CART_HEIGHT = 80;
-const PRODUCT_SIZE = 60;
-const INITIAL_SPAWN_RATE = 1500;
-const MIN_SPAWN_RATE = 600;
-const SPEED_INCREASE_INTERVAL = 10000;
+const PRODUCT_SIZE = 72; // 20% larger than 60
+const GAME_DURATION = 60000; // 1 minute
+const SPEED_INCREASE_INTERVAL = 10000; // 10 seconds
+const INITIAL_SPAWN_RATE = 1200;
+const MIN_SPAWN_RATE = 400;
+
+// Image mapping
+const productImages: Record<string, string> = {
+  'pizza': pizzaImg,
+  'cafe': cafeImg,
+  'cola': colaImg,
+  'mezzomix': mezzomixImg,
+  'colazero': colazeroImg,
+};
 
 const GameCanvas = ({ player, onGameOver }: GameCanvasProps) => {
   const [score, setScore] = useState(0);
   const [lives, setLives] = useState(3);
   const [products, setProducts] = useState<FallingProduct[]>([]);
   const [cartX, setCartX] = useState(50);
-  const [isPaused, setIsPaused] = useState(false);
   const [showFeedback, setShowFeedback] = useState<{ text: string; isPositive: boolean; x: number } | null>(null);
   const [missedProducts, setMissedProducts] = useState<string[]>([]);
+  const [timeLeft, setTimeLeft] = useState(GAME_DURATION);
   
   const gameAreaRef = useRef<HTMLDivElement>(null);
   const spawnRateRef = useRef(INITIAL_SPAWN_RATE);
   const gameStartTimeRef = useRef(Date.now());
+  const scoreRef = useRef(0);
+
+  // Keep score ref in sync
+  useEffect(() => {
+    scoreRef.current = score;
+  }, [score]);
+
+  // Game timer - 1 minute
+  useEffect(() => {
+    if (lives <= 0) return;
+
+    const timer = setInterval(() => {
+      const elapsed = Date.now() - gameStartTimeRef.current;
+      const remaining = Math.max(0, GAME_DURATION - elapsed);
+      setTimeLeft(remaining);
+      
+      if (remaining <= 0) {
+        onGameOver(scoreRef.current);
+      }
+    }, 100);
+
+    return () => clearInterval(timer);
+  }, [lives, onGameOver]);
 
   // Spawn new products
   useEffect(() => {
-    if (isPaused || lives <= 0) return;
+    if (lives <= 0 || timeLeft <= 0) return;
 
     const spawnProduct = () => {
-      // Increase difficulty over time
+      // Increase difficulty every 10 seconds
       const elapsed = Date.now() - gameStartTimeRef.current;
-      const speedMultiplier = 1 + Math.floor(elapsed / SPEED_INCREASE_INTERVAL) * 0.2;
-      spawnRateRef.current = Math.max(MIN_SPAWN_RATE, INITIAL_SPAWN_RATE - elapsed / 50);
+      const speedLevel = Math.floor(elapsed / SPEED_INCREASE_INTERVAL);
+      const speedMultiplier = 1 + speedLevel * 0.3;
+      spawnRateRef.current = Math.max(MIN_SPAWN_RATE, INITIAL_SPAWN_RATE - speedLevel * 100);
 
       // 60% chance ORLEN, 40% chance wrong product
       const isOrlen = Math.random() < 0.6;
@@ -49,7 +87,7 @@ const GameCanvas = ({ player, onGameOver }: GameCanvasProps) => {
         id: `${randomProduct.id}-${Date.now()}-${Math.random()}`,
         x: Math.random() * 80 + 10, // 10-90% of screen width
         y: -10,
-        speed: (2 + Math.random() * 2) * speedMultiplier,
+        speed: (2 + Math.random() * 1.5) * speedMultiplier,
         rotation: Math.random() * 360,
       };
 
@@ -58,11 +96,11 @@ const GameCanvas = ({ player, onGameOver }: GameCanvasProps) => {
 
     const interval = setInterval(spawnProduct, spawnRateRef.current);
     return () => clearInterval(interval);
-  }, [isPaused, lives]);
+  }, [lives, timeLeft]);
 
   // Game loop - move products
   useEffect(() => {
-    if (isPaused || lives <= 0) return;
+    if (lives <= 0 || timeLeft <= 0) return;
 
     const gameLoop = setInterval(() => {
       setProducts(prev => {
@@ -75,12 +113,12 @@ const GameCanvas = ({ player, onGameOver }: GameCanvasProps) => {
         // Check for missed ORLEN products
         const missed = updated.filter(p => p.y > 100 && p.isOrlen && !missedProducts.includes(p.id));
         if (missed.length > 0) {
-          setMissedProducts(prev => [...prev, ...missed.map(m => m.id)]);
+          setMissedProducts(prevMissed => [...prevMissed, ...missed.map(m => m.id)]);
           missed.forEach(() => {
             setLives(l => {
               const newLives = l - 1;
               if (newLives <= 0) {
-                onGameOver(score);
+                onGameOver(scoreRef.current);
               }
               return newLives;
             });
@@ -95,11 +133,11 @@ const GameCanvas = ({ player, onGameOver }: GameCanvasProps) => {
     }, 50);
 
     return () => clearInterval(gameLoop);
-  }, [isPaused, lives, score, onGameOver, missedProducts]);
+  }, [lives, timeLeft, onGameOver, missedProducts]);
 
   // Handle cart movement
   const handleMouseMove = useCallback((e: React.MouseEvent | React.TouchEvent) => {
-    if (!gameAreaRef.current || isPaused) return;
+    if (!gameAreaRef.current) return;
     
     const rect = gameAreaRef.current.getBoundingClientRect();
     let clientX: number;
@@ -112,29 +150,25 @@ const GameCanvas = ({ player, onGameOver }: GameCanvasProps) => {
     
     const x = ((clientX - rect.left) / rect.width) * 100;
     setCartX(Math.max(10, Math.min(90, x)));
-  }, [isPaused]);
+  }, []);
 
   // Handle keyboard controls
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (isPaused) return;
-      
       if (e.key === "ArrowLeft" || e.key === "a") {
         setCartX(prev => Math.max(10, prev - 5));
       } else if (e.key === "ArrowRight" || e.key === "d") {
         setCartX(prev => Math.min(90, prev + 5));
-      } else if (e.key === " " || e.key === "Escape") {
-        setIsPaused(p => !p);
       }
     };
 
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [isPaused]);
+  }, []);
 
   // Collision detection
   useEffect(() => {
-    if (isPaused || lives <= 0) return;
+    if (lives <= 0 || timeLeft <= 0) return;
 
     setProducts(prev => {
       const remaining: FallingProduct[] = [];
@@ -163,7 +197,7 @@ const GameCanvas = ({ player, onGameOver }: GameCanvasProps) => {
             setLives(l => {
               const newLives = l - 1;
               if (newLives <= 0) {
-                onGameOver(score);
+                onGameOver(scoreRef.current);
               }
               return newLives;
             });
@@ -177,7 +211,13 @@ const GameCanvas = ({ player, onGameOver }: GameCanvasProps) => {
       
       return remaining;
     });
-  }, [cartX, isPaused, lives, score, onGameOver]);
+  }, [cartX, lives, timeLeft, onGameOver]);
+
+  // Format time display
+  const formatTime = (ms: number) => {
+    const seconds = Math.ceil(ms / 1000);
+    return `${seconds}s`;
+  };
 
   return (
     <div 
@@ -202,6 +242,13 @@ const GameCanvas = ({ player, onGameOver }: GameCanvasProps) => {
           ))}
         </div>
         
+        {/* Timer */}
+        <div className="rounded-full bg-black/60 px-4 py-2 backdrop-blur-sm">
+          <span className={`font-display text-xl font-bold ${timeLeft <= 10000 ? 'text-destructive' : 'text-white'}`}>
+            ⏱️ {formatTime(timeLeft)}
+          </span>
+        </div>
+        
         {/* Score */}
         <motion.div 
           key={score}
@@ -212,14 +259,6 @@ const GameCanvas = ({ player, onGameOver }: GameCanvasProps) => {
             {score} Punkte
           </span>
         </motion.div>
-        
-        {/* Pause button */}
-        <button 
-          onClick={() => setIsPaused(p => !p)}
-          className="rounded-full bg-black/60 px-4 py-2 text-xl backdrop-blur-sm transition-colors hover:bg-black/80"
-        >
-          {isPaused ? "▶️" : "⏸️"}
-        </button>
       </div>
 
       {/* Player name */}
@@ -239,15 +278,23 @@ const GameCanvas = ({ player, onGameOver }: GameCanvasProps) => {
               position: 'absolute',
               left: `${product.x}%`,
               top: `${product.y}%`,
-              transform: `translate(-50%, -50%) rotate(${product.rotation}deg)`,
+              transform: `translate(-50%, -50%)`,
+              width: PRODUCT_SIZE,
+              height: PRODUCT_SIZE,
             }}
-            className={`flex h-14 w-14 items-center justify-center rounded-xl text-3xl shadow-lg ${
-              product.isOrlen 
-                ? 'bg-primary/90 ring-2 ring-primary-foreground' 
-                : 'bg-gray-700/90'
-            }`}
+            className="flex items-center justify-center"
           >
-            {product.emoji}
+            {product.isOrlen ? (
+              <img 
+                src={productImages[product.id.split('-')[0]]} 
+                alt={product.name}
+                className="h-full w-full object-contain drop-shadow-lg"
+              />
+            ) : (
+              <div className="flex h-full w-full items-center justify-center rounded-full bg-destructive shadow-lg">
+                <span className="text-3xl">❌</span>
+              </div>
+            )}
           </motion.div>
         ))}
       </AnimatePresence>
@@ -288,25 +335,6 @@ const GameCanvas = ({ player, onGameOver }: GameCanvasProps) => {
           ← → oder Maus
         </p>
       </motion.div>
-
-      {/* Pause overlay */}
-      {isPaused && (
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          className="absolute inset-0 z-40 flex items-center justify-center bg-black/70"
-        >
-          <div className="text-center">
-            <h2 className="game-title mb-4 text-5xl text-white">PAUSIERT</h2>
-            <button
-              onClick={() => setIsPaused(false)}
-              className="rounded-lg bg-primary px-8 py-3 font-display text-xl font-bold text-primary-foreground"
-            >
-              Weiterspielen
-            </button>
-          </div>
-        </motion.div>
-      )}
 
       {/* Instructions overlay at start */}
       <div className="pointer-events-none absolute bottom-32 left-0 right-0 text-center">

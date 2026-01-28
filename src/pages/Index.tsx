@@ -4,6 +4,7 @@ import RegistrationForm from "@/components/game/RegistrationForm";
 import GameCanvas from "@/components/game/GameCanvas";
 import GameOver from "@/components/game/GameOver";
 import type { PlayerInfo } from "@/components/game/types";
+import { savePlayer, loadPlayer, updatePlayerScore } from "@/components/game/types";
 
 type GamePhase = "start" | "register" | "playing" | "gameover";
 
@@ -13,8 +14,22 @@ const Index = () => {
   const [finalScore, setFinalScore] = useState(0);
   const registerRef = useRef<HTMLDivElement>(null);
 
+  // Load player from localStorage on mount
+  useEffect(() => {
+    const savedPlayer = loadPlayer();
+    if (savedPlayer) {
+      setPlayer(savedPlayer);
+    }
+  }, []);
+
   const handleStartClick = () => {
-    setPhase("register");
+    if (player) {
+      // Player already registered, start game directly
+      setPhase("playing");
+    } else {
+      // New player, show registration
+      setPhase("register");
+    }
   };
 
   useEffect(() => {
@@ -24,12 +39,18 @@ const Index = () => {
   }, [phase]);
 
   const handleRegistration = (playerInfo: PlayerInfo) => {
+    savePlayer(playerInfo);
     setPlayer(playerInfo);
     setPhase("playing");
   };
 
   const handleGameOver = (score: number) => {
     setFinalScore(score);
+    // Update total score
+    const updatedPlayer = updatePlayerScore(score);
+    if (updatedPlayer) {
+      setPlayer(updatedPlayer);
+    }
     setPhase("gameover");
   };
 
@@ -39,7 +60,6 @@ const Index = () => {
   };
 
   const handleBackToStart = () => {
-    setPlayer(null);
     setFinalScore(0);
     setPhase("start");
   };
@@ -47,14 +67,12 @@ const Index = () => {
   return (
     <div className="min-h-screen bg-background">
       {phase === "start" && (
-        <>
-          <StartScreen onStart={handleStartClick} />
-        </>
+        <StartScreen onStart={handleStartClick} player={player} />
       )}
 
       {phase === "register" && (
         <>
-          <StartScreen onStart={handleStartClick} />
+          <StartScreen onStart={handleStartClick} player={player} />
           <div ref={registerRef}>
             <RegistrationForm onSubmit={handleRegistration} />
           </div>

@@ -35,7 +35,7 @@ const RegistrationForm = ({ onSubmit }: RegistrationFormProps) => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (validateForm()) {
-      onSubmit({ name: name.trim(), email: email.trim() });
+      onSubmit({ name: name.trim(), email: email.trim(), totalScore: 0 });
     }
   };
 
