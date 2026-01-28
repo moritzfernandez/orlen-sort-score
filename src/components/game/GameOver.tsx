@@ -73,26 +73,32 @@ const GameOver = ({ score, player, onRestart, onBackToStart }: GameOverProps) =>
           {/* Custom Progress Bar with Icon */}
           <div className="mb-4 space-y-3">
             <div className="relative flex items-center gap-2">
-              {/* Progress Icon with Score */}
-              <div className="relative flex-shrink-0 w-14 h-14 z-10">
-                <img src={progressIcon} alt="Progress" className="w-full h-full object-contain" />
-                <span className="absolute inset-0 flex items-center justify-center font-display font-bold text-primary text-sm">
-                  {score}
-                </span>
-              </div>
-              
-              {/* Progress Bar */}
-              <div className="flex-1 h-4 bg-muted rounded-full overflow-hidden">
+              {/* Progress Bar Container */}
+              <div className="relative flex-1 h-4 bg-muted rounded-full overflow-visible">
+                {/* Progress Fill */}
                 <motion.div
                   initial={{ width: 0 }}
                   animate={{ width: `${progressPercent}%` }}
                   transition={{ delay: 0.6, duration: 0.8, ease: "easeOut" }}
                   className="h-full bg-primary rounded-full"
                 />
+                
+                {/* Progress Icon at the tip */}
+                <motion.div
+                  initial={{ left: 0 }}
+                  animate={{ left: `${progressPercent}%` }}
+                  transition={{ delay: 0.6, duration: 0.8, ease: "easeOut" }}
+                  className="absolute top-1/2 -translate-y-1/2 -translate-x-1/2 w-12 h-12 z-10"
+                >
+                  <img src={progressIcon} alt="Progress" className="w-full h-full object-contain" />
+                  <span className="absolute inset-0 flex items-center justify-center font-display font-bold text-primary text-xs">
+                    {score}
+                  </span>
+                </motion.div>
               </div>
               
               {/* Target */}
-              <span className="flex-shrink-0 font-display font-bold text-muted-foreground">200</span>
+              <span className="flex-shrink-0 font-display font-bold text-muted-foreground ml-4">200</span>
             </div>
             
             <p className="text-sm text-muted-foreground">
