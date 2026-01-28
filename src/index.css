@@ -17,8 +17,8 @@
     --popover: 0 0% 100%;
     --popover-foreground: 0 0% 10%;
 
-    /* ORLEN Brand Red */
-    --primary: 358 82% 50%;
+    /* ORLEN Brand Red #D81E04 */
+    --primary: 7 96% 43%;
     --primary-foreground: 0 0% 100%;
 
     /* Star Orange accent */
@@ -29,7 +29,7 @@
     --muted-foreground: 0 0% 45%;
 
     /* Warning/Life color */
-    --accent: 358 82% 50%;
+    --accent: 7 96% 43%;
     --accent-foreground: 0 0% 100%;
 
     --destructive: 0 84% 60%;
@@ -41,7 +41,7 @@
 
     --border: 0 0% 90%;
     --input: 0 0% 90%;
-    --ring: 358 82% 50%;
+    --ring: 7 96% 43%;
 
     --radius: 0.5rem;
 
@@ -70,7 +70,7 @@
     --popover: 220 15% 15%;
     --popover-foreground: 0 0% 98%;
 
-    --primary: 358 82% 50%;
+    --primary: 7 96% 43%;
     --primary-foreground: 0 0% 100%;
 
     --secondary: 25 95% 53%;
@@ -79,7 +79,7 @@
     --muted: 220 15% 20%;
     --muted-foreground: 0 0% 65%;
 
-    --accent: 358 82% 50%;
+    --accent: 7 96% 43%;
     --accent-foreground: 0 0% 100%;
 
     --destructive: 0 62.8% 30.6%;
@@ -90,7 +90,7 @@
 
     --border: 220 15% 25%;
     --input: 220 15% 25%;
-    --ring: 358 82% 50%;
+    --ring: 7 96% 43%;
     
     --sidebar-background: 240 5.9% 10%;
     --sidebar-foreground: 240 4.8% 95.9%;
