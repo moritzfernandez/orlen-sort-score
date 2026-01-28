@@ -302,17 +302,27 @@ const GameCanvas = ({ player, onGameOver }: GameCanvasProps) => {
             }}
             className="flex items-center justify-center"
           >
-            {product.isOrlen ? (
-              <img 
-                src={productImages[product.id.split('-')[0]]} 
-                alt={product.name}
-                className="h-full w-full object-contain drop-shadow-lg"
-              />
-            ) : (
-              <div className="flex h-full w-full items-center justify-center rounded-full bg-destructive shadow-lg">
-                <span className="text-3xl">❌</span>
-              </div>
-            )}
+            {(() => {
+              // Extract base product ID for image lookup
+              const baseId = product.id.replace(/-\d+-\d+.*$/, '');
+              const imgSrc = productImages[baseId];
+              
+              if (imgSrc) {
+                return (
+                  <img 
+                    src={imgSrc} 
+                    alt={product.name}
+                    className="h-full w-full object-contain drop-shadow-lg"
+                  />
+                );
+              } else {
+                return (
+                  <div className={`flex h-16 w-16 items-center justify-center rounded-full ${product.isOrlen ? 'bg-primary' : 'bg-destructive'} shadow-lg`}>
+                    <span className="text-xl">{product.isOrlen ? '⭐' : '❌'}</span>
+                  </div>
+                );
+              }
+            })()}
           </motion.div>
         ))}
       </AnimatePresence>
