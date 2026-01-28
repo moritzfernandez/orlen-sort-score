@@ -28,7 +28,7 @@ const GameOver = ({ score, player, onRestart, onBackToStart }: GameOverProps) =>
         initial={{ scale: 0.8, y: 50 }}
         animate={{ scale: 1, y: 0 }}
         transition={{ type: "spring", duration: 0.8 }}
-        className="w-full max-w-md overflow-hidden rounded-3xl bg-card shadow-2xl"
+        className="w-full max-w-md overflow-hidden bg-card shadow-2xl"
       >
         {/* Header */}
         <div className="bg-primary p-8 text-center">
@@ -62,7 +62,7 @@ const GameOver = ({ score, player, onRestart, onBackToStart }: GameOverProps) =>
             </p>
           </motion.div>
 
-          <div className="mb-6 rounded-lg bg-muted p-4">
+          <div className="mb-6 bg-muted p-4">
             <p className="text-sm text-muted-foreground">
               💡 Tip: Redeem these points at the gas station!
             </p>
@@ -74,16 +74,16 @@ const GameOver = ({ score, player, onRestart, onBackToStart }: GameOverProps) =>
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
               onClick={onRestart}
-              className="w-full rounded-lg bg-primary py-4 font-display text-xl font-bold uppercase tracking-wide text-primary-foreground shadow-lg"
+              className="w-full bg-primary py-4 font-display text-xl font-bold uppercase tracking-wide text-primary-foreground shadow-lg"
             >
-              Play Again 🎮
+              Play Again
             </motion.button>
             
             <motion.button
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
               onClick={onBackToStart}
-              className="w-full rounded-lg border-2 border-primary bg-transparent py-3 font-display text-lg font-bold uppercase tracking-wide text-primary"
+              className="w-full border-2 border-primary bg-transparent py-3 font-display text-lg font-bold uppercase tracking-wide text-primary"
             >
               Back to Start
             </motion.button>

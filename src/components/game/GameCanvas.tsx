@@ -15,8 +15,8 @@ interface GameCanvasProps {
   onGameOver: (score: number) => void;
 }
 
-const CART_WIDTH = 140;
-const PRODUCT_SIZE = 94; // 30% larger than original 72px
+const CART_WIDTH = 280; // doubled
+const PRODUCT_SIZE = 188; // doubled from 94px
 const GAME_DURATION = 60000; // 1 minute
 const INITIAL_SPAWN_RATE = 800; // faster spawning
 
@@ -339,7 +339,7 @@ const GameCanvas = ({ player, onGameOver }: GameCanvasProps) => {
         <img 
           src={basketImg} 
           alt="Shopping Basket" 
-          className="h-24 w-auto drop-shadow-2xl"
+          className="h-48 w-auto drop-shadow-2xl"
         />
         <p className="mt-1 rounded bg-black/50 px-2 py-0.5 text-xs text-white">
           ← → or Mouse

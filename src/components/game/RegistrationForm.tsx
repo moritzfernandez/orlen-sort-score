@@ -79,7 +79,7 @@ const RegistrationForm = ({
         transition={{ duration: 0.6 }} 
         className="w-full max-w-md"
       >
-        <div className="overflow-hidden rounded-2xl bg-card shadow-2xl">
+        <div className="overflow-hidden bg-card shadow-2xl">
           {/* Header */}
           <div className="bg-primary p-6 text-center">
             <h2 className="text-3xl font-bold text-primary-foreground md:text-4xl">
@@ -168,7 +168,7 @@ const RegistrationForm = ({
               type="submit" 
               whileHover={{ scale: 1.02 }} 
               whileTap={{ scale: 0.98 }} 
-              className="w-full rounded-lg bg-primary py-4 font-display text-xl font-bold uppercase tracking-wide text-primary-foreground shadow-lg transition-all hover:bg-primary/90"
+              className="w-full bg-primary py-4 font-display text-xl font-bold uppercase tracking-wide text-primary-foreground shadow-lg transition-all hover:bg-primary/90"
             >
               {isLogin ? "Login" : "Play Now"}
             </motion.button>
