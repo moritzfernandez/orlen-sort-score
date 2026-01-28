@@ -11,16 +11,13 @@ import chipsPaprikaImg from "@/assets/products/chips-paprika.png";
 import orlenStarLogoImg from "@/assets/products/orlen-star-logo.png";
 import basketImg from "@/assets/basket.png";
 // Wrong products images
-import wrongTreeImg from "@/assets/products/wrong-tree.png";
-import wrongChairImg from "@/assets/products/wrong-chair.png";
-import wrongPliersImg from "@/assets/products/wrong-pliers.png";
-import wrongPuppyImg from "@/assets/products/wrong-puppy.png";
-import wrongDogImg from "@/assets/products/wrong-dog.png";
-import wrongFootballImg from "@/assets/products/wrong-football.png";
-import wrongPumpkinImg from "@/assets/products/wrong-pumpkin.png";
-import wrongLampImg from "@/assets/products/wrong-lamp.png";
-import wrongHorseshoeImg from "@/assets/products/wrong-horseshoe.png";
-import wrongCatImg from "@/assets/products/wrong-cat.png";
+import wrongBaumImg from "@/assets/products/wrong-baum.png";
+import wrongCatImg from "@/assets/products/wrong-cat-2.png";
+import wrongDogImg from "@/assets/products/wrong-dog-2.png";
+import wrongHorseshoeImg from "@/assets/products/wrong-horseshoe-2.png";
+import wrongFootballImg from "@/assets/products/wrong-football-2.png";
+import wrongLampeImg from "@/assets/products/wrong-lampe.png";
+import wrongZangeImg from "@/assets/products/wrong-zange.png";
 import type { FallingProduct, PlayerInfo } from "./types";
 import { ORLEN_PRODUCTS, WRONG_PRODUCTS, BONUS_LOGO } from "./types";
 
@@ -45,16 +42,13 @@ const productImages: Record<string, string> = {
   'chips-paprika': chipsPaprikaImg,
   'orlen-star-logo': orlenStarLogoImg,
   // Wrong products
-  'wrong-tree': wrongTreeImg,
-  'wrong-chair': wrongChairImg,
-  'wrong-pliers': wrongPliersImg,
-  'wrong-puppy': wrongPuppyImg,
-  'wrong-dog': wrongDogImg,
-  'wrong-football': wrongFootballImg,
-  'wrong-pumpkin': wrongPumpkinImg,
-  'wrong-lamp': wrongLampImg,
-  'wrong-horseshoe': wrongHorseshoeImg,
+  'wrong-baum': wrongBaumImg,
   'wrong-cat': wrongCatImg,
+  'wrong-dog': wrongDogImg,
+  'wrong-horseshoe': wrongHorseshoeImg,
+  'wrong-football': wrongFootballImg,
+  'wrong-lampe': wrongLampeImg,
+  'wrong-zange': wrongZangeImg,
 };
 
 const GameCanvas = ({ player, onGameOver }: GameCanvasProps) => {
