@@ -5,7 +5,7 @@ import type { PlayerInfo } from "./types";
 import bgGame from "@/assets/bg-game.png";
 import logo from "@/assets/logo.png";
 import progressIcon from "@/assets/progress-icon.png";
-import visualNeu from "@/assets/visual-neu.png";
+import visualGameOver from "@/assets/visual-game-over.png";
 
 interface GameOverProps {
   score: number;
@@ -83,9 +83,9 @@ const GameOver = ({ score, player, onRestart, onBackToStart }: GameOverProps) =>
             className="mb-3 flex justify-center"
           >
           <img 
-              src={visualNeu} 
+              src={visualGameOver} 
               alt="Shop, Score & Win!" 
-              className="w-4/5 h-auto object-contain drop-shadow-lg"
+              className="w-full h-auto object-contain drop-shadow-lg"
               style={{ filter: 'drop-shadow(0 4px 6px rgba(0, 0, 0, 0.3))' }}
             />
           </motion.div>
