@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
-import { Progress } from "@/components/ui/progress";
 import type { PlayerInfo } from "./types";
+import gameBackground from "@/assets/game-background.png";
+import progressIcon from "@/assets/progress-icon.png";
 
 interface GameOverProps {
   score: number;
@@ -18,18 +19,24 @@ const GameOver = ({ score, player, onRestart, onBackToStart }: GameOverProps) =>
   };
 
   const { emoji, text } = getMessage();
+  const progressPercent = Math.min((score / 200) * 100, 100);
 
   return (
     <motion.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
-      className="flex min-h-screen items-center justify-center bg-gradient-to-br from-primary/20 via-background to-muted p-4"
+      className="flex min-h-screen items-center justify-center p-4"
+      style={{
+        backgroundImage: `url(${gameBackground})`,
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+      }}
     >
       <motion.div
         initial={{ scale: 0.8, y: 50 }}
         animate={{ scale: 1, y: 0 }}
         transition={{ type: "spring", duration: 0.8 }}
-        className="w-full max-w-md overflow-hidden bg-card shadow-2xl"
+        className="w-full max-w-md overflow-hidden bg-card/95 backdrop-blur-sm shadow-2xl rounded-lg"
       >
         {/* Header */}
         <div className="bg-primary p-8 text-center">
@@ -63,20 +70,43 @@ const GameOver = ({ score, player, onRestart, onBackToStart }: GameOverProps) =>
             </p>
           </motion.div>
 
-          {/* Progress to 200 points */}
-          <div className="mb-6 space-y-2">
-            <Progress 
-              value={Math.min((score / 200) * 100, 100)} 
-              className="h-3"
-            />
+          {/* Custom Progress Bar with Icon */}
+          <div className="mb-4 space-y-3">
+            <div className="relative flex items-center gap-2">
+              {/* Progress Icon with Score */}
+              <div className="relative flex-shrink-0 w-14 h-14 z-10">
+                <img src={progressIcon} alt="Progress" className="w-full h-full object-contain" />
+                <span className="absolute inset-0 flex items-center justify-center font-display font-bold text-primary text-sm">
+                  {score}
+                </span>
+              </div>
+              
+              {/* Progress Bar */}
+              <div className="flex-1 h-4 bg-muted rounded-full overflow-hidden">
+                <motion.div
+                  initial={{ width: 0 }}
+                  animate={{ width: `${progressPercent}%` }}
+                  transition={{ delay: 0.6, duration: 0.8, ease: "easeOut" }}
+                  className="h-full bg-primary rounded-full"
+                />
+              </div>
+              
+              {/* Target */}
+              <span className="flex-shrink-0 font-display font-bold text-muted-foreground">200</span>
+            </div>
+            
             <p className="text-sm text-muted-foreground">
               {score >= 200 
                 ? "🎉 Reward unlocked!" 
                 : `${200 - score} points missing to get the next reward`}
             </p>
+            
+            <p className="text-sm font-medium text-primary">
+              Keep playing and secure great prizes!
+            </p>
           </div>
 
-          <div className="mb-6 bg-muted p-4">
+          <div className="mb-6 bg-muted p-4 rounded-lg">
             <p className="text-sm text-muted-foreground">
               🏆 High Score: <span className="font-bold">{player.highScore || 0}</span>
             </p>
@@ -88,7 +118,7 @@ const GameOver = ({ score, player, onRestart, onBackToStart }: GameOverProps) =>
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
               onClick={onRestart}
-              className="w-full bg-primary py-4 font-display text-xl font-bold uppercase tracking-wide text-primary-foreground shadow-lg"
+              className="w-full bg-primary py-4 font-display text-xl font-bold uppercase tracking-wide text-primary-foreground shadow-lg rounded-lg"
             >
               Play Again
             </motion.button>
@@ -97,7 +127,7 @@ const GameOver = ({ score, player, onRestart, onBackToStart }: GameOverProps) =>
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
               onClick={onBackToStart}
-              className="w-full border-2 border-primary bg-transparent py-3 font-display text-lg font-bold uppercase tracking-wide text-primary"
+              className="w-full border-2 border-primary bg-transparent py-3 font-display text-lg font-bold uppercase tracking-wide text-primary rounded-lg"
             >
               Back to Start
             </motion.button>
