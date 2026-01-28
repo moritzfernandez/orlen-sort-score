@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import gameBackground from "@/assets/game-background.png";
+import bgGame from "@/assets/bg-game.png";
 import pizzaImg from "@/assets/products/pizza.png";
 import cafeImg from "@/assets/products/cafe.png";
 import colaImg from "@/assets/products/cola.png";
@@ -274,7 +274,7 @@ const GameCanvas = ({ player, onGameOver }: GameCanvasProps) => {
     <div 
       ref={gameAreaRef}
       className="relative h-screen w-full cursor-none overflow-hidden select-none"
-      style={{ backgroundImage: `url(${gameBackground})`, backgroundSize: 'cover', backgroundPosition: 'center' }}
+      style={{ backgroundImage: `url(${bgGame})`, backgroundSize: 'cover', backgroundPosition: 'center' }}
       onMouseMove={handleMouseMove}
       onTouchMove={handleMouseMove}
     >
