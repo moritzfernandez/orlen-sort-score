@@ -10,6 +10,17 @@ import chipsMeersalzImg from "@/assets/products/chips-meersalz.png";
 import chipsPaprikaImg from "@/assets/products/chips-paprika.png";
 import orlenStarLogoImg from "@/assets/products/orlen-star-logo.png";
 import basketImg from "@/assets/basket.png";
+// Wrong products images
+import wrongTreeImg from "@/assets/products/wrong-tree.png";
+import wrongChairImg from "@/assets/products/wrong-chair.png";
+import wrongPliersImg from "@/assets/products/wrong-pliers.png";
+import wrongPuppyImg from "@/assets/products/wrong-puppy.png";
+import wrongDogImg from "@/assets/products/wrong-dog.png";
+import wrongFootballImg from "@/assets/products/wrong-football.png";
+import wrongPumpkinImg from "@/assets/products/wrong-pumpkin.png";
+import wrongLampImg from "@/assets/products/wrong-lamp.png";
+import wrongHorseshoeImg from "@/assets/products/wrong-horseshoe.png";
+import wrongCatImg from "@/assets/products/wrong-cat.png";
 import type { FallingProduct, PlayerInfo } from "./types";
 import { ORLEN_PRODUCTS, WRONG_PRODUCTS, BONUS_LOGO } from "./types";
 
@@ -33,6 +44,17 @@ const productImages: Record<string, string> = {
   'chips-meersalz': chipsMeersalzImg,
   'chips-paprika': chipsPaprikaImg,
   'orlen-star-logo': orlenStarLogoImg,
+  // Wrong products
+  'wrong-tree': wrongTreeImg,
+  'wrong-chair': wrongChairImg,
+  'wrong-pliers': wrongPliersImg,
+  'wrong-puppy': wrongPuppyImg,
+  'wrong-dog': wrongDogImg,
+  'wrong-football': wrongFootballImg,
+  'wrong-pumpkin': wrongPumpkinImg,
+  'wrong-lamp': wrongLampImg,
+  'wrong-horseshoe': wrongHorseshoeImg,
+  'wrong-cat': wrongCatImg,
 };
 
 const GameCanvas = ({ player, onGameOver }: GameCanvasProps) => {
