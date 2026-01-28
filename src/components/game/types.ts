@@ -31,6 +31,8 @@ export interface GameState {
 export const ORLEN_PRODUCTS: Product[] = [
   { id: 'pizza', name: 'Star Pizza', image: '/src/assets/products/pizza.png', isOrlen: true, points: 10 },
   { id: 'cafe', name: 'Star Café', image: '/src/assets/products/cafe.png', isOrlen: true, points: 10 },
+  { id: 'chips-meersalz', name: 'Kessel Chips Meersalz', image: '/src/assets/products/chips-meersalz.png', isOrlen: true, points: 10 },
+  { id: 'chips-paprika', name: 'Kessel Chips Paprika', image: '/src/assets/products/chips-paprika.png', isOrlen: true, points: 10 },
 ];
 
 // Non-ORLEN products (avoid these!) - -5 points
