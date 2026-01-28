@@ -47,9 +47,18 @@ export const BONUS_LOGO: Product = {
   points: 20 
 };
 
-// Wrong products (avoid these!) - -5 points (red X only)
+// Wrong products (avoid these!) - -5 points
 export const WRONG_PRODUCTS: Product[] = [
-  { id: 'wrong-item', name: 'Wrong Item', isOrlen: false, points: -5 },
+  { id: 'wrong-tree', name: 'Baum', image: '/src/assets/products/wrong-tree.png', isOrlen: false, points: -5 },
+  { id: 'wrong-chair', name: 'Stuhl', image: '/src/assets/products/wrong-chair.png', isOrlen: false, points: -5 },
+  { id: 'wrong-pliers', name: 'Zange', image: '/src/assets/products/wrong-pliers.png', isOrlen: false, points: -5 },
+  { id: 'wrong-puppy', name: 'Welpe', image: '/src/assets/products/wrong-puppy.png', isOrlen: false, points: -5 },
+  { id: 'wrong-dog', name: 'Hund', image: '/src/assets/products/wrong-dog.png', isOrlen: false, points: -5 },
+  { id: 'wrong-football', name: 'Fußball', image: '/src/assets/products/wrong-football.png', isOrlen: false, points: -5 },
+  { id: 'wrong-pumpkin', name: 'Kürbis', image: '/src/assets/products/wrong-pumpkin.png', isOrlen: false, points: -5 },
+  { id: 'wrong-lamp', name: 'Lampe', image: '/src/assets/products/wrong-lamp.png', isOrlen: false, points: -5 },
+  { id: 'wrong-horseshoe', name: 'Hufeisen', image: '/src/assets/products/wrong-horseshoe.png', isOrlen: false, points: -5 },
+  { id: 'wrong-cat', name: 'Katze', image: '/src/assets/products/wrong-cat.png', isOrlen: false, points: -5 },
 ];
 
 export const ALL_PRODUCTS = [...ORLEN_PRODUCTS, ...WRONG_PRODUCTS];
