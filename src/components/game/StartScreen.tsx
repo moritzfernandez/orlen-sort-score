@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
-import startBg from "@/assets/start-bg.png";
+import bgHome from "@/assets/bg-home.png";
+import logo from "@/assets/logo.png";
 import desktopVisual from "@/assets/desktop-visual.png";
 import type { PlayerInfo } from "./types";
 
@@ -13,11 +14,20 @@ interface StartScreenProps {
 const StartScreen = ({ onStart, player, isRegistering = false }: StartScreenProps) => {
   return (
     <section className="relative min-h-screen w-full">
-      {/* Fixed Background Image */}
+      {/* Fixed Background Image - covers full screen */}
       <div 
-        className="pointer-events-none fixed inset-0 z-0 bg-contain bg-center bg-no-repeat"
-        style={{ backgroundImage: `url(${startBg})`, backgroundColor: '#fff' }}
+        className="pointer-events-none fixed inset-0 z-0 bg-cover bg-center bg-no-repeat"
+        style={{ backgroundImage: `url(${bgHome})` }}
       />
+      
+      {/* Logo top-left */}
+      <div className="fixed left-6 top-6 z-20">
+        <img 
+          src={logo} 
+          alt="ORLEN Star" 
+          className="w-[250px] h-auto"
+        />
+      </div>
       
       {/* Score Badge - shown if player exists */}
       {player && !isRegistering && (

@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import type { PlayerInfo } from "./types";
-import gameBackground from "@/assets/game-background.png";
+import bgGame from "@/assets/bg-game.png";
+import logo from "@/assets/logo.png";
 import progressIcon from "@/assets/progress-icon.png";
 import visualNeu from "@/assets/visual-neu.png";
 
@@ -26,13 +27,21 @@ const GameOver = ({ score, player, onRestart, onBackToStart }: GameOverProps) =>
     <motion.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
-      className="flex min-h-screen items-center justify-center p-4"
+      className="relative flex min-h-screen items-center justify-center p-4"
       style={{
-        backgroundImage: `url(${gameBackground})`,
+        backgroundImage: `url(${bgGame})`,
         backgroundSize: "cover",
         backgroundPosition: "center",
       }}
     >
+      {/* Logo top-left */}
+      <div className="absolute left-6 top-6 z-20">
+        <img 
+          src={logo} 
+          alt="ORLEN Star" 
+          className="w-[250px] h-auto"
+        />
+      </div>
       <motion.div
         initial={{ scale: 0.8, y: 50 }}
         animate={{ scale: 1, y: 0 }}
