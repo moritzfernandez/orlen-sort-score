@@ -1,7 +1,7 @@
 export interface Product {
   id: string;
   name: string;
-  emoji: string;
+  image?: string;
   isOrlen: boolean;
   points: number;
 }
@@ -16,6 +16,7 @@ export interface FallingProduct extends Product {
 export interface PlayerInfo {
   name: string;
   email: string;
+  totalScore: number;
 }
 
 export interface GameState {
@@ -26,38 +27,49 @@ export interface GameState {
   products: FallingProduct[];
 }
 
-// ORLEN/Star branded products (collect these!)
+// ORLEN/Star branded products (collect these!) - +10 points
 export const ORLEN_PRODUCTS: Product[] = [
-  { id: 'star-energy-mango', name: 'Star Energy Mango Peach', emoji: '🥤', isOrlen: true, points: 10 },
-  { id: 'star-eis', name: 'STAR EIS', emoji: '🍦', isOrlen: true, points: 10 },
-  { id: 'star-kesselchip', name: 'Star Kesselchip', emoji: '🥔', isOrlen: true, points: 15 },
-  { id: 'star-peanut-bar', name: 'STAR PEANUT CARAMEL BAR', emoji: '🍫', isOrlen: true, points: 10 },
-  { id: 'star-energy-acai', name: 'STAR ENERGY ACAI', emoji: '🫐', isOrlen: true, points: 10 },
-  { id: 'star-energy-drink', name: 'STAR ENERGY DRINK', emoji: '⚡', isOrlen: true, points: 10 },
-  { id: 'star-curry-ketchup', name: 'STAR CURRY-KETCHUP', emoji: '🍅', isOrlen: true, points: 15 },
-  { id: 'star-apfelschorle', name: 'STAR APFELSCHORLE', emoji: '🍎', isOrlen: true, points: 10 },
-  { id: 'star-mineralwasser', name: 'STAR MINERALWASSER', emoji: '💧', isOrlen: true, points: 10 },
-  { id: 'star-salami', name: 'STAR Salami', emoji: '🥩', isOrlen: true, points: 15 },
-  { id: 'star-kaffee', name: 'STAR KAFFEE', emoji: '☕', isOrlen: true, points: 10 },
-  { id: 'petrol-canister', name: 'Benzinkanister', emoji: '⛽', isOrlen: true, points: 20 },
-  { id: 'petrol-pump', name: 'Zapfsäule', emoji: '🛢️', isOrlen: true, points: 20 },
-  { id: 'baked-goods', name: 'Backwaren', emoji: '🥐', isOrlen: true, points: 10 },
-  { id: 'car-wash', name: 'Waschanlage', emoji: '🚿', isOrlen: true, points: 25 },
-  { id: 'gift-card', name: 'Geschenkkarte', emoji: '🎁', isOrlen: true, points: 15 },
+  { id: 'pizza', name: 'Star Pizza', image: '/src/assets/products/pizza.png', isOrlen: true, points: 10 },
+  { id: 'cafe', name: 'Star Café', image: '/src/assets/products/cafe.png', isOrlen: true, points: 10 },
 ];
 
-// Non-ORLEN products (avoid these!)
+// Non-ORLEN products (avoid these!) - -5 points
 export const WRONG_PRODUCTS: Product[] = [
-  { id: 'coca-cola', name: 'Coca Cola', emoji: '🥤', isOrlen: false, points: -15 },
-  { id: 'pepsi', name: 'Pepsi', emoji: '🥤', isOrlen: false, points: -15 },
-  { id: 'red-bull', name: 'Red Bull', emoji: '🐂', isOrlen: false, points: -15 },
-  { id: 'trash', name: 'Müll', emoji: '🗑️', isOrlen: false, points: -20 },
-  { id: 'banana-peel', name: 'Bananenschale', emoji: '🍌', isOrlen: false, points: -10 },
-  { id: 'old-tire', name: 'Alter Reifen', emoji: '⭕', isOrlen: false, points: -15 },
-  { id: 'shell-logo', name: 'Shell', emoji: '🐚', isOrlen: false, points: -25 },
-  { id: 'aral-logo', name: 'Aral', emoji: '🔵', isOrlen: false, points: -25 },
-  { id: 'broken-bottle', name: 'Kaputte Flasche', emoji: '🍾', isOrlen: false, points: -10 },
-  { id: 'cigarette-butt', name: 'Zigarettenstummel', emoji: '🚬', isOrlen: false, points: -20 },
+  { id: 'cola', name: 'Coca Cola', image: '/src/assets/products/cola.png', isOrlen: false, points: -5 },
+  { id: 'mezzomix', name: 'Mezzo Mix', image: '/src/assets/products/mezzomix.png', isOrlen: false, points: -5 },
+  { id: 'colazero', name: 'Cola Zero', image: '/src/assets/products/colazero.png', isOrlen: false, points: -5 },
 ];
 
 export const ALL_PRODUCTS = [...ORLEN_PRODUCTS, ...WRONG_PRODUCTS];
+
+// Storage key for player data
+export const PLAYER_STORAGE_KEY = 'orlen-game-player';
+
+// Save player to localStorage
+export const savePlayer = (player: PlayerInfo) => {
+  localStorage.setItem(PLAYER_STORAGE_KEY, JSON.stringify(player));
+};
+
+// Load player from localStorage
+export const loadPlayer = (): PlayerInfo | null => {
+  const stored = localStorage.getItem(PLAYER_STORAGE_KEY);
+  if (stored) {
+    try {
+      return JSON.parse(stored);
+    } catch {
+      return null;
+    }
+  }
+  return null;
+};
+
+// Update player total score
+export const updatePlayerScore = (additionalScore: number): PlayerInfo | null => {
+  const player = loadPlayer();
+  if (player) {
+    player.totalScore = (player.totalScore || 0) + additionalScore;
+    savePlayer(player);
+    return player;
+  }
+  return null;
+};
