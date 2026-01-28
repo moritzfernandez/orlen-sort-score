@@ -22,15 +22,13 @@ const StartScreen = ({ onStart, player, isRegistering = false }: StartScreenProp
       {/* Score Badge - shown if player exists */}
       {player && !isRegistering && (
         <motion.div
-          initial={{ opacity: 0, scale: 0.8 }}
-          animate={{ opacity: 1, scale: 1 }}
-          className="fixed right-4 top-4 z-30 flex items-center gap-2 rounded-full bg-primary px-4 py-2 shadow-lg"
+          initial={{ x: 100, opacity: 0 }}
+          animate={{ x: 0, opacity: 1 }}
+          transition={{ type: "spring", stiffness: 100 }}
+          className="fixed right-0 top-4 z-30 flex flex-col bg-primary px-6 py-3 shadow-lg"
         >
-          <span className="text-2xl">⭐</span>
-          <div className="text-primary-foreground">
-            <p className="text-xs font-medium opacity-80">Total Points</p>
-            <p className="font-display text-xl font-bold">{player.totalScore}</p>
-          </div>
+          <p className="text-sm font-semibold text-primary-foreground">{player.name}</p>
+          <p className="font-display text-2xl font-bold text-primary-foreground">{player.totalScore} Points</p>
         </motion.div>
       )}
       
@@ -63,7 +61,7 @@ const StartScreen = ({ onStart, player, isRegistering = false }: StartScreenProp
                 size="lg"
                 className="h-16 px-12 text-2xl font-bold uppercase tracking-wide shadow-2xl"
               >
-                Play Now! 🎮
+                Play Now!
               </Button>
             </motion.div>
           )}
