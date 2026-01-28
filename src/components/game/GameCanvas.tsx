@@ -257,41 +257,44 @@ const GameCanvas = ({ player, onGameOver }: GameCanvasProps) => {
       onTouchMove={handleMouseMove}
     >
       {/* HUD */}
-      <div className="absolute left-0 right-0 top-0 z-20 flex items-center justify-between p-4">
-        {/* Lives */}
-        <div className="flex items-center gap-2 rounded-full bg-black/60 px-4 py-2 backdrop-blur-sm">
-          {[...Array(3)].map((_, i) => (
-            <motion.span
-              key={i}
-              animate={i >= lives ? { scale: 0, opacity: 0 } : { scale: 1, opacity: 1 }}
-              className={`text-2xl ${i >= lives ? 'grayscale' : ''}`}
-            >
-              ❤️
-            </motion.span>
-          ))}
-        </div>
-        
-        {/* Timer */}
+      <div className="absolute left-0 right-0 top-0 z-20 flex items-start justify-between p-4">
+        {/* Timer - left side */}
         <div className="rounded-full bg-black/60 px-4 py-2 backdrop-blur-sm">
           <span className={`font-display text-xl font-bold ${timeLeft <= 10000 ? 'text-destructive' : 'text-white'}`}>
             ⏱️ {formatTime(timeLeft)}
           </span>
         </div>
         
-        {/* Score */}
-        <motion.div 
-          key={score}
-          animate={{ scale: [1, 1.1, 1] }}
-          className="rounded-full bg-black/60 px-6 py-2 backdrop-blur-sm"
-        >
-        <span className="font-display text-2xl font-bold text-score-gold">
-            {score} Points
-          </span>
-        </motion.div>
+        {/* Score and Lives - right side */}
+        <div className="flex flex-col items-end">
+          {/* Score in red box */}
+          <motion.div 
+            key={score}
+            animate={{ scale: [1, 1.1, 1] }}
+            className="bg-primary px-6 py-2"
+          >
+            <span className="font-display text-2xl font-bold text-primary-foreground">
+              ⭐ {score} Points
+            </span>
+          </motion.div>
+          
+          {/* Lives - no background */}
+          <div className="mt-2 flex items-center gap-1">
+            {[...Array(3)].map((_, i) => (
+              <motion.span
+                key={i}
+                animate={i >= lives ? { scale: 0, opacity: 0 } : { scale: 1, opacity: 1 }}
+                className={`text-2xl ${i >= lives ? 'grayscale' : ''}`}
+              >
+                ❤️
+              </motion.span>
+            ))}
+          </div>
+        </div>
       </div>
 
       {/* Player name */}
-      <div className="absolute left-4 top-16 z-20 rounded-lg bg-primary/90 px-3 py-1">
+      <div className="absolute left-4 top-16 z-20 bg-primary/90 px-3 py-1">
         <span className="font-semibold text-primary-foreground">{player.name}</span>
       </div>
 
