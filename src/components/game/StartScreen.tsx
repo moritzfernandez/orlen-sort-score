@@ -6,9 +6,10 @@ import type { PlayerInfo } from "./types";
 interface StartScreenProps {
   onStart: () => void;
   player: PlayerInfo | null;
+  isRegistering?: boolean;
 }
 
-const StartScreen = ({ onStart, player }: StartScreenProps) => {
+const StartScreen = ({ onStart, player, isRegistering = false }: StartScreenProps) => {
   return (
     <section className="relative min-h-screen w-full overflow-hidden">
       {/* Fixed Background Image */}
@@ -18,7 +19,7 @@ const StartScreen = ({ onStart, player }: StartScreenProps) => {
       />
       
       {/* Score Badge - shown if player exists */}
-      {player && (
+      {player && !isRegistering && (
         <motion.div
           initial={{ opacity: 0, scale: 0.8 }}
           animate={{ opacity: 1, scale: 1 }}
@@ -36,18 +37,18 @@ const StartScreen = ({ onStart, player }: StartScreenProps) => {
       <div className="relative z-10 flex min-h-screen flex-col items-center justify-center px-4">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
+          animate={isRegistering ? { opacity: 1, y: -100 } : { opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
           className="flex flex-col items-center"
         >
-          {/* Desktop Visual - clickable */}
+          {/* Desktop Visual - clickable only when not registering */}
           <motion.img
             src={desktopVisual}
             alt="Dein Korb zum Glück"
-            className="max-w-full cursor-pointer md:max-w-2xl"
-            whileHover={{ scale: 1.02 }}
-            whileTap={{ scale: 0.98 }}
-            onClick={onStart}
+            className={`max-w-full md:max-w-2xl ${!isRegistering ? 'cursor-pointer' : ''}`}
+            whileHover={!isRegistering ? { scale: 1.02 } : {}}
+            whileTap={!isRegistering ? { scale: 0.98 } : {}}
+            onClick={!isRegistering ? onStart : undefined}
           />
         </motion.div>
       </div>
