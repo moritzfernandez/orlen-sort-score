@@ -29,6 +29,23 @@ const StartScreen = ({ onStart, player, isRegistering = false }: StartScreenProp
         >
           <p className="text-sm font-semibold text-primary-foreground">{player.name}</p>
           <p className="font-display text-2xl font-bold text-primary-foreground">{player.totalScore} Points</p>
+          <button
+            onClick={() => {
+              if (navigator.share) {
+                navigator.share({
+                  title: 'ORLEN Star Game',
+                  text: `I scored ${player.totalScore} points in the ORLEN Star Game! Can you beat me?`,
+                  url: window.location.href,
+                });
+              } else {
+                navigator.clipboard.writeText(window.location.href);
+                alert('Link copied to clipboard!');
+              }
+            }}
+            className="mt-1 text-xs text-primary-foreground/80 underline hover:text-primary-foreground"
+          >
+            Share with Friends
+          </button>
         </motion.div>
       )}
       
